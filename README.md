@@ -17,4 +17,4 @@ $ ./build.sh
 $ python3 test.py
 ```
 
-Then check `result_overview.png`, `warped.jpg` and `warped_gpu.jpg`.
+Then check `warped.jpg` and `warped_gpu.jpg`.
