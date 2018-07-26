@@ -48,3 +48,16 @@ cdef extern from 'opencv2/cudawarping.hpp' namespace 'cv::cuda':
     cdef void warpPerspective(GpuMat src, GpuMat dst, Mat M, Size dsize, int flags, int borderMode, Scalar borderValue, Stream& stream)
     # Function using default values
     cdef void warpPerspective(GpuMat src, GpuMat dst, Mat M, Size dsize, int flags)
+    cdef void resize(
+        GpuMat src,
+        GpuMat dst,
+        Size dsize,
+        double fx,
+        double fy,
+        int interpolation,
+        Stream& stream)
+    # Function using default values
+    cdef void resize(
+        GpuMat src,
+        GpuMat dst,
+        Size dsize)

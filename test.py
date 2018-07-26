@@ -49,3 +49,10 @@ h, w = img.shape
 warped = GpuWrapper.cudaWarpPerspectiveWrapper(
              img, M.astype(np.float32), (w, h), cv2.INTER_LINEAR)
 cv2.imwrite('warped_gpu.jpg', warped)
+
+
+# Resize
+
+img = cv2.imread('test_transform.jpg')
+img = GpuWrapper.cudaResizeWrapper(img, (30, 30))
+cv2.imwrite('resize.jpg', img)

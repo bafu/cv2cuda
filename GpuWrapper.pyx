@@ -31,3 +31,27 @@ def cudaWarpPerspectiveWrapper(np.ndarray[np.uint8_t, ndim=2] _src,
     cdef np.ndarray out = <np.ndarray> pyopencv_from(dst_host)
     return out
 
+
+def cudaResizeWrapper(np.ndarray[np.uint8_t, ndim=3] _src,
+                      _size_tuple):
+    # Create GPU/device InputArray for src
+    cdef Mat src_mat
+    cdef GpuMat src_gpu
+    pyopencv_to(<PyObject*> _src, src_mat)
+    src_gpu.upload(src_mat)
+
+    # Create Size object from size tuple
+    #
+    # Note that size/shape in Python is handled in row-major-order,
+    # therefore, width is [1] and height is [0]
+    cdef Size size = Size(<int> _size_tuple[1], <int> _size_tuple[0])
+
+    # Create empty GPU/device OutputArray for dst
+    cdef GpuMat dst_gpu = GpuMat()
+    resize(src_gpu, dst_gpu, size)
+
+    # Get result of dst
+    cdef Mat dst_host
+    dst_gpu.download(dst_host)
+    cdef np.ndarray out = <np.ndarray> pyopencv_from(dst_host)
+    return out
