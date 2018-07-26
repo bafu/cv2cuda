@@ -15,14 +15,14 @@ img = cv2.imread('test_transform.jpg')
 img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
 # source points
-top_left = [194,430]
-top_right = [521,103]
-bottom_right = [549,131]
-bottom_left = [222,458]
+top_left = [521, 103]
+top_right = [549, 131]
+bottom_right = [222, 458]
+bottom_left = [194, 430]
 pts = np.array([bottom_left, bottom_right, top_right, top_left])
 
 # target points
-y_off = 400;  # y offset
+y_off = 50;  # y offset
 top_left_dst = [top_left[0], top_left[1] - y_off]
 top_right_dst = [top_left_dst[0] + 39.6, top_left_dst[1]]
 bottom_right_dst = [top_right_dst[0], top_right_dst[1] + 462.4]
