@@ -10,7 +10,7 @@ import time
 import cv2
 import numpy as np
 
-import GpuWrapper
+from cv2cuda import gpuwrapper
 
 
 def test_warpperspective():
@@ -49,14 +49,14 @@ def test_warpperspective():
     cv2.imwrite('warped.jpg', warped)
 
     h, w = img.shape
-    warped = GpuWrapper.cudaWarpPerspectiveWrapper(
+    warped = gpuwrapper.cudaWarpPerspectiveWrapper(
                  img, M.astype(np.float32), (w, h), cv2.INTER_LINEAR)
     cv2.imwrite('warped_gpu.jpg', warped)
 
 
 def test_resize():
     img = cv2.imread('test_transform.jpg')
-    img = GpuWrapper.cudaResizeWrapper(img, (30, 30))
+    img = gpuwrapper.cudaResizeWrapper(img, (30, 30))
     cv2.imwrite('resize.jpg', img)
 
 
@@ -74,7 +74,7 @@ def test_resize_performance():
     print('GPU round 1')
     for i, img in enumerate(imgs):
         t_start = time.time()
-        img_r = GpuWrapper.cudaResizeWrapper(img, (500, 500))
+        img_r = gpuwrapper.cudaResizeWrapper(img, (500, 500))
         t_end = time.time()
         print('GPU resize time #{0}, {1}: {2} ms'.format(
             i, img.shape, (t_end - t_start) * 1000))
@@ -82,7 +82,7 @@ def test_resize_performance():
     print('GPU round 2')
     for i, img in enumerate(imgs):
         t_start = time.time()
-        img_r = GpuWrapper.cudaResizeWrapper(img, (500, 500))
+        img_r = gpuwrapper.cudaResizeWrapper(img, (500, 500))
         t_end = time.time()
         print('GPU resize time #{0}, {1}: {2} ms'.format(
             i, img.shape, (t_end - t_start) * 1000))
